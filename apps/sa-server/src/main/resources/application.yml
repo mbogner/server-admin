@@ -1,0 +1,71 @@
+spring:
+  application:
+    name: sa-server1
+  main:
+    banner-mode: off
+  profiles:
+    active: local
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${spring.application.name}
+    username: admin
+    password: admin
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 600000
+      max-lifetime: 3300000
+      connection-init-sql: SELECT 1
+      connection-test-query: ${spring.datasource.hikari.connection-init-sql}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc:
+          lob:
+            non_contextual_creation: true
+          time_zone: UTC
+        generate_statistics: true
+    show-sql: false
+  jackson:
+    deserialization:
+      READ_ENUMS_USING_TO_STRING: true
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+      FAIL_ON_INVALID_SUBTYPE: false
+    serialization:
+      INDENT_OUTPUT: false
+      ORDER_MAP_ENTRIES_BY_KEYS: false
+      WRITE_DATES_AS_TIMESTAMPS: false
+      WRITE_EMPTY_JSON_ARRAYS: false
+      WRITE_ENUMS_USING_TO_STRING: true
+      WRITE_NULL_MAP_VALUES: false
+      WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED: false
+      FAIL_ON_SELF_REFERENCES: true
+    default-property-inclusion: non_null
+    time-zone: UTC
+  threads:
+    virtual:
+      enabled: true
+  kafka:
+    listener:
+      type: single
+      ack-mode: manual
+    consumer:
+      group-id: ${spring.application.name}
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      max-poll-records: 1
+    producer:
+      client-id: ${spring.application.name}
+      batch-size: 1
+
+logging:
+  level:
+    root: INFO
+#  pattern:
+#    console:
+#  file:
+#    name: ${spring.application.name}.log

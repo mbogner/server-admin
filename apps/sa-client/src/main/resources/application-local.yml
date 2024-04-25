@@ -1,0 +1,7 @@
+logging:
+  level:
+    dev.mbo: TRACE
+
+spring:
+  kafka:
+    bootstrap-servers: kraft1:9192,kraft2:9193,kraft3:9194

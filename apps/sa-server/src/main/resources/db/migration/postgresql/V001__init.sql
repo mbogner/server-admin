@@ -1,0 +1,4 @@
+CREATE FUNCTION now_utc() RETURNS TIMESTAMP AS
+$$
+SELECT now() AT TIME ZONE 'utc';
+$$ LANGUAGE sql;

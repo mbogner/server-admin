@@ -1,0 +1,129 @@
+services:
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    hostname: postgres
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_DB: sa-server1
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      TZ: UTC
+      PGTZ: UTC
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d sa-server1" ]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+    networks:
+      - kafka
+
+  kraft1:
+    image: mbopm/kraft:latest
+    container_name: kraft1
+    hostname: kraft1
+    environment:
+      KAFKA_CLUSTER_ID: "n5FANH2RQ7eJ0E3wuyflmA"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./server1.properties:/opt/kafka/config/kraft/server.properties:ro
+      - kraft1_data:/data/kraft-combined-logs:rw
+    healthcheck:
+      test: nc -z kraft1 9192 || exit 1
+      interval: 2s
+      timeout: 2s
+      retries: 10
+      start_period: 10s
+    ports:
+      - "127.0.0.1:9192:9192"
+    networks:
+      - kafka
+
+  kraft2:
+    image: mbopm/kraft:latest
+    container_name: kraft2
+    hostname: kraft2
+    environment:
+      KAFKA_CLUSTER_ID: "n5FANH2RQ7eJ0E3wuyflmA"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./server2.properties:/opt/kafka/config/kraft/server.properties:ro
+      - kraft2_data:/data/kraft-combined-logs:rw
+    healthcheck:
+      test: nc -z kraft2 9193 || exit 1
+      interval: 2s
+      timeout: 2s
+      retries: 10
+      start_period: 10s
+    ports:
+      - "127.0.0.1:9193:9193"
+    networks:
+      - kafka
+
+  kraft3:
+    image: mbopm/kraft:latest
+    container_name: kraft3
+    hostname: kraft3
+    environment:
+      KAFKA_CLUSTER_ID: "n5FANH2RQ7eJ0E3wuyflmA"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./server3.properties:/opt/kafka/config/kraft/server.properties:ro
+      - kraft3_data:/data/kraft-combined-logs:rw
+    healthcheck:
+      test: nc -z kraft3 9194 || exit 1
+      interval: 2s
+      timeout: 2s
+      retries: 10
+      start_period: 10s
+    ports:
+      - "127.0.0.1:9194:9194"
+    networks:
+      - kafka
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    container_name: kafdrop
+    hostname: kafdrop
+    ports:
+      - "127.0.0.1:8081:9000"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      kraft1:
+        condition: service_healthy
+      kraft2:
+        condition: service_healthy
+      kraft3:
+        condition: service_healthy
+    environment:
+      KAFKA_BROKERCONNECT: kraft1:9192,kraft2:9193,kraft3:9194
+      JVM_OPTS: "-Xms64M -Xmx128M"
+      SERVER_SERVLET_CONTEXTPATH: "/"
+    healthcheck:
+      test: curl --fail --silent http://localhost:9000 --output /dev/null || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 20
+      start_period: 30s
+    networks:
+      - kafka
+
+volumes:
+  postgres_data:
+  kraft1_data:
+  kraft2_data:
+  kraft3_data:
+
+networks:
+  kafka:
+    name: net_kafka
+  postgres:
+    name: net_postgres
