@@ -1,6 +1,6 @@
 package dev.mbo.serveradmin.logging
 
-import dev.mbo.serveradmin.shared.MapUtil
+import dev.mbo.serveradmin.shared.map.MapUtil
 import org.slf4j.MDC
 
 object MDCUtil {

@@ -34,6 +34,8 @@ dependencyResolutionManagement {
             // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
             // https://mvnrepository.com/artifact/org.flywaydb/flyway-database-postgresql
             version("flyway", "10.11.1")
+            // https://mvnrepository.com/artifact/org.apache.commons/commons-text
+            version("commons.text", "1.12.0")
 
             // LIBRARIES ------------------------------------------------------
             library(
@@ -71,6 +73,10 @@ dependencyResolutionManagement {
                 "org.flywaydb",
                 "flyway-database-postgresql"
             ).versionRef("flyway")
+            library(
+                "commons.text",
+                "org.apache.commons", "commons-text"
+            ).versionRef("commons.text")
 
             // PLUGINS --------------------------------------------------------
             plugin("spring.boot", "org.springframework.boot").versionRef("spring.boot")

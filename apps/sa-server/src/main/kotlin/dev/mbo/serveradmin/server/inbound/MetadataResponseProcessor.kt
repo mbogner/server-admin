@@ -3,6 +3,7 @@ package dev.mbo.serveradmin.server.inbound
 import dev.mbo.serveradmin.logging.logger
 import dev.mbo.serveradmin.messaging.io.messages.metadata.MetadataResponse
 import dev.mbo.serveradmin.messaging.processor.Processor
+import dev.mbo.serveradmin.shared.str.CaseUtil
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 
@@ -12,7 +13,7 @@ class MetadataResponseProcessor : Processor() {
     private val log = logger()
 
     override fun supportedRecords(): RecordStaticMetadata = RecordStaticMetadata(
-        type = MetadataResponse::class.java.simpleName,
+        type = CaseUtil.toTopicName(MetadataResponse::class.java.simpleName),
         schemaVersion = "1",
         contentType = MediaType.APPLICATION_JSON_VALUE
     )

@@ -1,5 +1,6 @@
 package dev.mbo.serveradmin.messaging.io
 
+import dev.mbo.serveradmin.shared.str.CaseUtil
 import java.time.Instant
 import java.util.*
 
@@ -12,7 +13,7 @@ abstract class Message<T>(
     val createdAt: Instant = Instant.now()
 ) {
 
-    val type: String = javaClass.simpleName
+    val type: String = CaseUtil.toTopicName(javaClass.simpleName)
 
     override fun toString(): String {
         return "${javaClass.name}(" +

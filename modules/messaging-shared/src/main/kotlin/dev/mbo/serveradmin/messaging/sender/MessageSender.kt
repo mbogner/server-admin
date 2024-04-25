@@ -24,7 +24,7 @@ class MessageSender(
     }
 
     override fun boardToGround(message: Message<*>) {
-        send("${SharedTopic.BOARD_TO_GROUND}.${message.sender}", message)
+        send("${SharedTopic.BOARD_TO_GROUND}.${message.type}", message)
     }
 
     override fun send(topic: String, message: Message<*>) {

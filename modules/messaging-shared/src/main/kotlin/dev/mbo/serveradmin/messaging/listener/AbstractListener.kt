@@ -1,7 +1,7 @@
 package dev.mbo.serveradmin.messaging.listener
 
 import dev.mbo.serveradmin.logging.MDCUtil
-import dev.mbo.serveradmin.shared.MapKeyMissingException
+import dev.mbo.serveradmin.shared.map.MapKeyMissingException
 import dev.mbo.serveradmin.logging.logger
 import dev.mbo.serveradmin.messaging.KafkaHeadersTranslator
 import dev.mbo.serveradmin.messaging.processor.HeaderMissingException

@@ -208,7 +208,6 @@ ij_java_place_assignment_sign_on_next_line = false
 ij_java_prefer_longer_names = true
 ij_java_prefer_parameters_wrap = false
 ij_java_record_components_wrap = normal
-ij_java_repeat_annotations =
 ij_java_repeat_synchronized = true
 ij_java_replace_instanceof_and_cast = false
 ij_java_replace_null_check = true
@@ -409,7 +408,6 @@ ij_xml_space_after_tag_name = false
 ij_xml_space_around_equals_in_attribute = false
 ij_xml_space_inside_empty_tag = false
 ij_xml_text_wrap = normal
-ij_xml_use_custom_settings = false
 
 [{*.ats,*.cts,*.mts,*.ts}]
 ij_continuation_indent_size = 4

@@ -1,4 +1,4 @@
-package dev.mbo.serveradmin.shared
+package dev.mbo.serveradmin.shared.map
 
 object MapUtil {
 
