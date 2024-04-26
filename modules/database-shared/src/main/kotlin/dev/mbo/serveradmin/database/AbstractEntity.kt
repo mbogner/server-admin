@@ -7,8 +7,10 @@ import java.time.Instant
 
 @MappedSuperclass
 abstract class AbstractEntity<T : Serializable>(
+
     @field:Column(name = "created_at", nullable = false)
-    val createdAt: Instant = Instant.now(),
+    val createdAt: Instant = Instant.now()
+
 ) : Identifiable<T> {
 
     override fun toString(): String {

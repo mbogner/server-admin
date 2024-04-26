@@ -1,7 +1,7 @@
 package dev.mbo.serveradmin.messaging.listener
 
 import dev.mbo.serveradmin.logging.logger
-import dev.mbo.serveradmin.messaging.processor.ProcessorRouter
+import dev.mbo.serveradmin.messaging.listener.processor.ProcessorRouter
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.springframework.kafka.support.Acknowledgment
 import java.time.Duration

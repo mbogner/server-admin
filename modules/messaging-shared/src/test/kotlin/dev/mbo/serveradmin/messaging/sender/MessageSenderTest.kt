@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.test.context.ContextConfiguration
+import java.util.*
 
 @SpringBootTest
 @ContextConfiguration(classes = [TestContext::class])
@@ -61,7 +62,11 @@ class MessageSenderTest {
     }
 
     private fun createTestMessage(): HeartbeatMessage {
-        return HeartbeatMessage("test")
+        return HeartbeatMessage(
+            sender = "test",
+            senderKey = UUID.randomUUID(),
+            targetKey = UUID.randomUUID()
+        )
     }
 
     private fun verifyKafkaSends() {

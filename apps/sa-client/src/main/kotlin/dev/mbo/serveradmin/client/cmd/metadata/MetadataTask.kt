@@ -1,4 +1,4 @@
-package dev.mbo.serveradmin.client.cmd.heartbeat
+package dev.mbo.serveradmin.client.cmd.metadata
 
 import dev.mbo.serveradmin.logging.logger
 import jakarta.annotation.PostConstruct
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component
 import java.util.concurrent.TimeUnit
 
 @Component
-class HeartbeatTask(
-    private val service: HeartbeatService,
-    @Value("\${app.task.heartbeat.send-on-startup:true}")
+class MetadataTask(
+    private val service: MetadataService,
+    @Value("\${app.task.metadata.send-on-startup:true}")
     private val sendOnStartup: Boolean,
 ) {
 
@@ -19,14 +19,14 @@ class HeartbeatTask(
     @PostConstruct
     internal fun init() {
         if (sendOnStartup) {
-            log.debug("sending heartbeat on startup")
+            log.info("sending metadata on startup")
             service.send()
         }
     }
 
-    @Scheduled(fixedRateString = "\${app.task.heartbeat.seconds}", timeUnit = TimeUnit.SECONDS)
-    fun scheduledHeartbeat() {
-        log.debug("sending heartbeat")
+    @Scheduled(fixedRateString = "\${app.task.metadata.seconds}", timeUnit = TimeUnit.SECONDS)
+    internal fun resendRegularly() {
+        log.info("sending metadata")
         service.send()
     }
 

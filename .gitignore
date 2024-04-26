@@ -4,6 +4,7 @@ target/
 .idea/
 .vscode/
 out/
+tmp/
 *.iml
 *.db
 *.log

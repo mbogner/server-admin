@@ -49,7 +49,7 @@ class MessageSender(
     }
 
     private fun convertHeaders(message: Message<*>): List<RecordHeader> {
-        return message.headers.asSequence()
+        var resultMap = message.headers.asSequence()
             .map {
                 RecordHeader(
                     it.key,
@@ -81,7 +81,21 @@ class MessageSender(
                     MediaType.APPLICATION_JSON_VALUE.toByteArray(StandardCharsets.UTF_8)
                 )
             )
-            .toList()
+            .plus(
+                RecordHeader(
+                    CustomHeader.SENDER_KEY,
+                    message.senderKey.toString().toByteArray(StandardCharsets.UTF_8)
+                )
+            )
+        if (message.targetKey != null) {
+            resultMap = resultMap.plus(
+                RecordHeader(
+                    CustomHeader.TARGET_KEY,
+                    message.targetKey.toString().toByteArray(StandardCharsets.UTF_8)
+                )
+            )
+        }
+        return resultMap.toList()
     }
 
 }

@@ -1,4 +1,4 @@
-package dev.mbo.serveradmin.messaging.processor
+package dev.mbo.serveradmin.messaging.listener.processor
 
 import org.springframework.stereotype.Component
 

@@ -65,7 +65,15 @@ spring:
 logging:
   level:
     root: INFO
+    org:
+      hibernate: WARN
 #  pattern:
 #    console:
 #  file:
 #    name: ${spring.application.name}.log
+
+app:
+  server:
+    metadata:
+      key: 5d5cecbe-f37a-4070-9e36-87504c58d408
+      name: ${spring.application.name}

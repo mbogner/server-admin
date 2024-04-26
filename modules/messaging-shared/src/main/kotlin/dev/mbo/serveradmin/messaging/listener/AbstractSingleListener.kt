@@ -1,9 +1,8 @@
 package dev.mbo.serveradmin.messaging.listener
 
 import dev.mbo.serveradmin.logging.logger
-import dev.mbo.serveradmin.messaging.processor.ProcessorRouter
+import dev.mbo.serveradmin.messaging.listener.processor.ProcessorRouter
 import org.apache.kafka.clients.consumer.ConsumerRecord
-import org.slf4j.MDC
 import org.springframework.kafka.support.Acknowledgment
 import java.time.Duration
 
@@ -17,11 +16,9 @@ abstract class AbstractSingleListener(
         record: ConsumerRecord<String, String>,
         acknowledgment: Acknowledgment
     ) {
-        log.trace("received entry")
-
         try {
+            log.trace("received record")
             process(record)
-            log.debug("successfully processed entry")
             acknowledgment.acknowledge() // all fine
         } catch (exc: Exception) {
             log.debug("failed on entry", exc)
@@ -29,7 +26,6 @@ abstract class AbstractSingleListener(
                 Duration.ofMillis(10_000)
             ) // NACK at index i
         }
-        MDC.remove("topic")
     }
 
 }

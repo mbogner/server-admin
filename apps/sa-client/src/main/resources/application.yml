@@ -63,10 +63,6 @@ spring:
       client-id: ${spring.application.name}
       batch-size: 1
 
-app:
-  kafka:
-    topics: sa-client-broadcast,${spring.application.name}
-
 logging:
   level:
     root: INFO
@@ -74,3 +70,20 @@ logging:
 #    console:
 #  file:
 #    name: ${spring.application.name}.log
+
+app:
+  client:
+    metadata:
+      name: ${spring.application.name}
+      key: d0841578-a56c-431e-aa76-77ec907e1d84
+  server:
+    key: 5d5cecbe-f37a-4070-9e36-87504c58d408
+  kafka:
+    topics: sa-client-broadcast,${spring.application.name}
+  task:
+    heartbeat:
+      send-on-startup: true
+      seconds: 10
+    metadata:
+      send-on-startup: true
+      seconds: 21600 # 6 hours

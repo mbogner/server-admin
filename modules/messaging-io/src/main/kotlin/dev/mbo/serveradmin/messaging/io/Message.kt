@@ -5,9 +5,11 @@ import java.time.Instant
 import java.util.*
 
 abstract class Message<T>(
-    val sender: String,
     val id: UUID = UUID.randomUUID(),
-    val version: Int = 1,
+    val sender: String,
+    val senderKey: UUID,
+    val targetKey: UUID? = null,
+    val version: Int,
     val value: T? = null,
     val headers: Map<String, String> = emptyMap(),
     val createdAt: Instant = Instant.now()
@@ -20,6 +22,8 @@ abstract class Message<T>(
                 "id=$id, " +
                 "type=$type, " +
                 "sender=$sender, " +
+                "senderKey=$senderKey, " +
+                "targetKey=$targetKey, " +
                 "version=$version, " +
                 "headers=$headers" +
                 "createdAt=$createdAt, " +
@@ -33,6 +37,8 @@ abstract class Message<T>(
         if (type != other.type) return false
         if (id != other.id) return false
         if (sender != other.sender) return false
+        if (senderKey != other.senderKey) return false
+        if (targetKey != other.targetKey) return false
         if (version != other.version) return false
         if (value != other.value) return false
         if (headers != other.headers) return false
@@ -45,6 +51,8 @@ abstract class Message<T>(
         var result = type.hashCode()
         result = 31 * result + id.hashCode()
         result = 31 * result + sender.hashCode()
+        result = 31 * result + senderKey.hashCode()
+        result = 31 * result + targetKey.hashCode()
         result = 31 * result + version
         result = 31 * result + (value?.hashCode() ?: 0)
         result = 31 * result + headers.hashCode()

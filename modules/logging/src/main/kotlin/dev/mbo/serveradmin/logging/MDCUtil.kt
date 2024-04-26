@@ -5,13 +5,21 @@ import org.slf4j.MDC
 
 object MDCUtil {
 
-    fun readValueAndAddToMdc(value: String, mdcName: String): String {
+    fun addValueAsMdc(value: String, mdcName: String): String {
         MDC.put(mdcName, value)
         return value
     }
 
     fun readRequiredKeyAndAddToMdc(key: String, data: Map<String, String>, mdcName: String): String {
-        return readValueAndAddToMdc(MapUtil.readRequiredKey(key, data), mdcName)
+        return addValueAsMdc(MapUtil.readRequiredKey(key, data), mdcName)
+    }
+
+    fun readOptionalKeyAndAddToMdcIfExists(key: String, data: Map<String, String>, mdcName: String): String? {
+        val value = data[key]
+        if (null != value) {
+            MDC.put(mdcName, value)
+        }
+        return value
     }
 
 }
