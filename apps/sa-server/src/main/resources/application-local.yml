@@ -2,6 +2,7 @@ logging:
   level:
     dev.mbo: TRACE
     dev.mbo.serveradmin.server.db.history: WARN
+    org.hibernate: WARN
 
 spring:
   kafka:

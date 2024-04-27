@@ -10,19 +10,19 @@ abstract class Processor {
     private val log = logger()
 
     data class RecordMetadata(
+        val id: String,
         val topic: String,
         val ts: Instant,
         val sender: String,
         val senderKey: UUID,
-        val targetKey: UUID?
+        val targetKey: UUID?,
+        val headersRaw: Map<String, String>,
     )
 
     abstract fun supportedRecords(): RecordStaticMetadata
 
     open fun process(
         value: String?,
-        headersRaw: Map<String, String>,
-        recordId: String,
         recordMetadata: RecordMetadata,
         recordStaticMetadata: RecordStaticMetadata,
     ) {
@@ -32,7 +32,7 @@ abstract class Processor {
             recordMetadata.sender,
             recordMetadata.senderKey,
             recordMetadata.ts,
-            headersRaw,
+            recordMetadata.headersRaw,
             value
         )
     }

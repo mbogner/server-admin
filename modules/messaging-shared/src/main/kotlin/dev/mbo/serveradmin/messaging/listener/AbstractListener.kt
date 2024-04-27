@@ -71,14 +71,14 @@ abstract class AbstractListener(
             log.trace("using processor {}", processor::class.java.name)
             processor.process(
                 value = record.value(),
-                headersRaw = headersRaw,
-                recordId = id,
                 recordMetadata = Processor.RecordMetadata(
+                    id = id,
                     topic = topic,
                     ts = ts,
                     sender = sender,
                     senderKey = senderKey,
                     targetKey = targetKey,
+                    headersRaw = headersRaw,
                 ),
                 recordStaticMetadata = recordStaticMetadata
             )

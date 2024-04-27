@@ -22,12 +22,10 @@ class MetadataMessageProcessor(
 
     override fun process(
         value: String?,
-        headersRaw: Map<String, String>,
-        recordId: String,
         recordMetadata: RecordMetadata,
         recordStaticMetadata: RecordStaticMetadata,
     ) {
-        super.process(value, headersRaw, recordId, recordMetadata, recordStaticMetadata)
+        super.process(value, recordMetadata, recordStaticMetadata)
         validate(recordStaticMetadata)
         try {
             if (value.isNullOrBlank()) {
