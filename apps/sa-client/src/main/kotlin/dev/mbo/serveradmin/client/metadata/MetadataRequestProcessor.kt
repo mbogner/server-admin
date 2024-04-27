@@ -1,4 +1,4 @@
-package dev.mbo.serveradmin.client.cmd.metadata
+package dev.mbo.serveradmin.client.metadata
 
 import dev.mbo.serveradmin.messaging.io.messages.RecordStaticMetadata
 import dev.mbo.serveradmin.messaging.io.messages.metadata.MetadataRequest

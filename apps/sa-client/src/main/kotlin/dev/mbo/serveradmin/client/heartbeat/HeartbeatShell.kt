@@ -1,4 +1,4 @@
-package dev.mbo.serveradmin.client.cmd.heartbeat
+package dev.mbo.serveradmin.client.heartbeat
 
 import org.springframework.shell.standard.ShellComponent
 import org.springframework.shell.standard.ShellMethod

@@ -1,7 +1,7 @@
-package dev.mbo.serveradmin.client.cmd.metadata
+package dev.mbo.serveradmin.client.metadata
 
-import dev.mbo.serveradmin.client.cmd.ClientMetadata
-import dev.mbo.serveradmin.client.cmd.ServerMetadata
+import dev.mbo.serveradmin.client.ClientMetadata
+import dev.mbo.serveradmin.client.ServerMetadata
 import dev.mbo.serveradmin.logging.logger
 import dev.mbo.serveradmin.messaging.io.messages.metadata.MetadataMessage
 import dev.mbo.serveradmin.messaging.io.messages.metadata.MetadataPayload

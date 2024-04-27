@@ -1,7 +1,7 @@
-package dev.mbo.serveradmin.client.cmd.heartbeat
+package dev.mbo.serveradmin.client.heartbeat
 
-import dev.mbo.serveradmin.client.cmd.ClientMetadata
-import dev.mbo.serveradmin.client.cmd.ServerMetadata
+import dev.mbo.serveradmin.client.ClientMetadata
+import dev.mbo.serveradmin.client.ServerMetadata
 import dev.mbo.serveradmin.messaging.io.messages.heartbeat.HeartbeatMessage
 import dev.mbo.serveradmin.messaging.sender.ClientSender
 import org.springframework.stereotype.Service

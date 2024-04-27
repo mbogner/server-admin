@@ -33,9 +33,10 @@ class Client(
     @field:Column(name = "last_heartbeat")
     var lastHeartbeat: Instant? = null,
 
+    @field:NotNull
     @field:Valid
     @field:Embedded
-    var metadata: ClientMetadata? = null
+    var metadata: ClientMetadata? = ClientMetadata()
 
 ) : AbstractVersionedEntity<Int>() {
 

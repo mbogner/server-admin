@@ -29,22 +29,34 @@ class ClientService(
                 key = senderKey,
                 lastHeartbeat = ts,
             )
-            clientRepository.save(client)
+            client = clientRepository.save(client)
+            log.debug("created client")
         } else if (null == client.lastHeartbeat || ts.isAfter(client.lastHeartbeat)) {
             client.lastHeartbeat = ts
+            log.debug("updated client.lastHeartbeat")
         } else {
             log.warn("received outdated heartbeat for {}({})", sender, senderKey)
         }
 
+        requestMetadata(client = client, receiverTopic = sender)
+    }
+
+    private fun requestMetadata(client: Client, receiverTopic: String) {
+        val now = Instant.now()
         if (null == client.metadata) {
-            requestMetadata(from = sender)
+            client.metadata = ClientMetadata()
+        }
+
+        if (null == client.metadata?.ts && null == client.metadata!!.lastRequest) {
+            log.info("requesting metadata from {}", receiverTopic)
+            client.metadata?.lastRequest = now
+            sendMetadataRequest(receiverTopic)
         }
     }
 
-    private fun requestMetadata(from: String) {
-        log.info("requesting metadata from {}", from)
+    private fun sendMetadataRequest(receiverTopic: String) {
         serverSender.send(
-            topic = from,
+            topic = receiverTopic,
             message = MetadataRequest(
                 sender = serverMetadata.name,
                 senderKey = serverMetadata.key
@@ -62,7 +74,7 @@ class ClientService(
         schemaVersion: String
     ) {
         val client = clientRepository.findByKeyAndName(senderKey, sender)
-        if (client == null) {
+        if (null == client) {
             createMetadata(sender, senderKey, ts, schema, schemaVersion, metadata)
         } else {
             updateMetadata(client, ts, schema, schemaVersion, metadata)
@@ -98,20 +110,16 @@ class ClientService(
         schemaVersion: String,
         metadata: String
     ) {
-        log.debug("update client")
+        log.debug("update client metadata")
         if (null == client.metadata) {
-            client.metadata = ClientMetadata(
-                ts = ts,
-                schema = schema,
-                schemaVersion = schemaVersion,
-                metadata = metadata
-            )
-        } else if (null == client.metadata!!.ts || true == client.metadata!!.ts?.isBefore(ts)) {
-            client.metadata!!.ts = ts
-            client.metadata!!.schema = schema
-            client.metadata!!.schemaVersion = schemaVersion
-            client.metadata!!.metadata = metadata
+            client.metadata = ClientMetadata()
         }
+
+        client.metadata?.ts = ts
+        client.metadata?.schema = schema
+        client.metadata?.schemaVersion = schemaVersion
+        client.metadata?.metadata = metadata
+        client.metadata?.lastRequest = null
     }
 
 }

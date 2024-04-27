@@ -1,4 +1,4 @@
-package dev.mbo.serveradmin.client.cmd.metadata
+package dev.mbo.serveradmin.client.metadata
 
 import dev.mbo.serveradmin.logging.logger
 import jakarta.annotation.PostConstruct

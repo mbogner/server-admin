@@ -1,4 +1,4 @@
-package dev.mbo.serveradmin.client.cmd.metadata
+package dev.mbo.serveradmin.client.metadata
 
 import org.springframework.shell.standard.ShellComponent
 import org.springframework.shell.standard.ShellMethod

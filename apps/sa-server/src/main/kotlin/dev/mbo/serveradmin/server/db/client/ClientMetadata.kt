@@ -9,6 +9,9 @@ import java.time.Instant
 @Embeddable
 class ClientMetadata(
 
+    @field:Column(name = "metadata_last_request")
+    var lastRequest: Instant? = null,
+
     @field:Column(name = "metadata_ts")
     var ts: Instant? = null,
 

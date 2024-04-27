@@ -13,6 +13,7 @@ create table clients
 
     last_heartbeat          timestamp without time zone,
 
+    metadata_last_request   timestamp without time zone,
     metadata_ts             timestamp without time zone,
     metadata_schema         varchar(255),
     metadata_schema_version varchar(32),

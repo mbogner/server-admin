@@ -1,6 +1,5 @@
 package dev.mbo.serveradmin.client
 
-import dev.mbo.serveradmin.client.cmd.ServerMetadata
 import dev.mbo.serveradmin.logging.logger
 import dev.mbo.serveradmin.messaging.listener.AbstractSingleListener
 import dev.mbo.serveradmin.messaging.listener.processor.ProcessorRouter

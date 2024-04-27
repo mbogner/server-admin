@@ -1,4 +1,4 @@
-package dev.mbo.serveradmin.client.cmd.heartbeat
+package dev.mbo.serveradmin.client.heartbeat
 
 import dev.mbo.serveradmin.logging.logger
 import jakarta.annotation.PostConstruct
