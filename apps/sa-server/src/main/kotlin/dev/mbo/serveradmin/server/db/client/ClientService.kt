@@ -1,6 +1,9 @@
 package dev.mbo.serveradmin.server.db.client
 
 import dev.mbo.serveradmin.logging.logger
+import dev.mbo.serveradmin.messaging.io.messages.metadata.MetadataRequest
+import dev.mbo.serveradmin.messaging.sender.ServerSender
+import dev.mbo.serveradmin.server.ServerMetadata
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.Instant
@@ -9,23 +12,44 @@ import java.util.*
 @Service
 class ClientService(
     private val clientRepository: ClientRepository,
+    private val serverSender: ServerSender,
+    private val serverMetadata: ServerMetadata,
 ) {
 
     private val log = logger()
 
     @Transactional
     fun storeHeartbeat(ts: Instant, sender: String, senderKey: UUID) {
-        val client = clientRepository.findByKeyAndName(senderKey, sender)
+        var client = clientRepository.findByKeyAndName(senderKey, sender)
 
         // do nothing if we don't know the client's metadata
         if (client == null) {
-            log.warn("received heartbeat from client {}({}) without metadata", sender, senderKey)
-            return
+            client = Client(
+                name = sender,
+                key = senderKey,
+                lastHeartbeat = ts,
+            )
+            clientRepository.save(client)
+        } else if (null == client.lastHeartbeat || ts.isAfter(client.lastHeartbeat)) {
+            client.lastHeartbeat = ts
+        } else {
+            log.warn("received outdated heartbeat for {}({})", sender, senderKey)
         }
 
-        if (null == client.lastHeartbeat || ts.isAfter(client.lastHeartbeat)) {
-            client.lastHeartbeat = ts
+        if (null == client.metadata) {
+            requestMetadata(from = sender)
         }
+    }
+
+    private fun requestMetadata(from: String) {
+        log.info("requesting metadata from {}", from)
+        serverSender.send(
+            topic = from,
+            message = MetadataRequest(
+                sender = serverMetadata.name,
+                senderKey = serverMetadata.key
+            )
+        )
     }
 
     @Transactional

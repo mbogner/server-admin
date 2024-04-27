@@ -21,6 +21,15 @@ create table clients
     constraint clients_key_name unique (key, name)
 );
 
+CREATE TABLE clients_history PARTITION OF db_history
+    FOR VALUES IN ('clients');
+
+CREATE TRIGGER clients_audit_table
+    AFTER INSERT OR UPDATE OR DELETE
+    ON clients
+    FOR EACH ROW
+EXECUTE PROCEDURE audit_table();
+
 create trigger clients_check_created_at_unchanged
     before update
     on clients

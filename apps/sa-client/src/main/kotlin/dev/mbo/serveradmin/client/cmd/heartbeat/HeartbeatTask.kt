@@ -20,14 +20,14 @@ class HeartbeatTask(
     internal fun init() {
         if (sendOnStartup) {
             log.debug("sending heartbeat on startup")
-            service.send()
+            service.sendHeartbeat()
         }
     }
 
     @Scheduled(fixedRateString = "\${app.task.heartbeat.seconds}", timeUnit = TimeUnit.SECONDS)
     fun scheduledHeartbeat() {
         log.debug("sending heartbeat")
-        service.send()
+        service.sendHeartbeat()
     }
 
 }

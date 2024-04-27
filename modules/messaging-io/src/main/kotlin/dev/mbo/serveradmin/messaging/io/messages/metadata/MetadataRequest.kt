@@ -1,29 +1,26 @@
 package dev.mbo.serveradmin.messaging.io.messages.metadata
 
 import dev.mbo.serveradmin.messaging.io.Message
+import dev.mbo.serveradmin.messaging.io.NoPayload
 import dev.mbo.serveradmin.messaging.io.messages.ContentType
 import dev.mbo.serveradmin.messaging.io.messages.RecordStaticMetadata
 import dev.mbo.serveradmin.shared.str.CaseUtil
 import java.util.*
 
-class MetadataMessage(
+class MetadataRequest(
     sender: String,
     senderKey: UUID,
-    targetKey: UUID,
-    value: MetadataPayload
-) : Message<MetadataPayload>(
+) : Message<NoPayload>(
     sender = sender,
     senderKey = senderKey,
-    targetKey = targetKey,
-    value = value,
     staticMetadata = staticMetadata
 ) {
 
     companion object {
         val staticMetadata = RecordStaticMetadata(
-            type = CaseUtil.toTopicName(MetadataMessage::class.java.simpleName),
+            type = CaseUtil.toTopicName(MetadataRequest::class.java.simpleName),
             schemaVersion = "1",
-            contentType = ContentType.JSON
+            contentType = ContentType.NONE
         )
     }
 

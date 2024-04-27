@@ -67,6 +67,8 @@ logging:
     root: INFO
     org:
       hibernate: WARN
+  pattern:
+    console: "%clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd'T'HH:mm:ss.SSSXXX}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m %clr({%X}){magenta}%n"
 #  pattern:
 #    console:
 #  file:
@@ -77,3 +79,7 @@ app:
     metadata:
       key: 5d5cecbe-f37a-4070-9e36-87504c58d408
       name: ${spring.application.name}
+  task:
+    db-history-cleanup:
+      cron: "0 0 * * * *" # every hour
+      cutoff: 604800 # 1 week

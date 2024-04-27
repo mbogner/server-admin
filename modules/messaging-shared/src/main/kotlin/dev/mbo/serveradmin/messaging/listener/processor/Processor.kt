@@ -1,19 +1,13 @@
 package dev.mbo.serveradmin.messaging.listener.processor
 
 import dev.mbo.serveradmin.logging.logger
+import dev.mbo.serveradmin.messaging.io.messages.RecordStaticMetadata
 import java.time.Instant
 import java.util.*
 
 abstract class Processor {
 
     private val log = logger()
-
-    // this class is used to lookup processor
-    data class RecordStaticMetadata(
-        val type: String,
-        val schemaVersion: String,
-        val contentType: String
-    )
 
     data class RecordMetadata(
         val topic: String,

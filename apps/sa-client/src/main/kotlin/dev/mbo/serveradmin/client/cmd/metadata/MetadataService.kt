@@ -21,7 +21,7 @@ class MetadataService(
 
     private val log = logger()
 
-    fun send() {
+    fun sendMetadata() {
         val metadata = MetadataPayload(
             hostData = HostDataUtil.readHostData(),
             diskSpace = DiskSpaceUtil.readDiskSpace(),

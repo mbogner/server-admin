@@ -3,6 +3,7 @@ package dev.mbo.serveradmin.messaging.listener
 import dev.mbo.serveradmin.logging.MDCUtil
 import dev.mbo.serveradmin.logging.logger
 import dev.mbo.serveradmin.messaging.KafkaHeadersTranslator
+import dev.mbo.serveradmin.messaging.io.messages.RecordStaticMetadata
 import dev.mbo.serveradmin.messaging.listener.processor.HeaderMissingException
 import dev.mbo.serveradmin.messaging.listener.processor.Processor
 import dev.mbo.serveradmin.messaging.listener.processor.ProcessorRouter
@@ -29,7 +30,7 @@ abstract class AbstractListener(
         try {
             // read required values
             val id = MDCUtil.readRequiredKeyAndAddToMdc(CustomHeader.ID, headersRaw, MDC_RECORD_ID)
-            val recordStaticMetadata = Processor.RecordStaticMetadata(
+            val recordStaticMetadata = RecordStaticMetadata(
                 type = MDCUtil.readRequiredKeyAndAddToMdc(CustomHeader.TYPE, headersRaw, MDC_RECORD_TYPE),
                 schemaVersion = MDCUtil.readRequiredKeyAndAddToMdc(
                     CustomHeader.SCHEMA_VERSION,
@@ -61,15 +62,13 @@ abstract class AbstractListener(
             val ts = Instant.ofEpochMilli(record.timestamp())
             MDCUtil.addValueAsMdc(ts.toString(), MDC_RECORD_TS)
 
-            log.trace("read metadata")
-
             // get processor for message
             val processor = router.processorFor(
                 recordStaticMetadata = recordStaticMetadata
             )
 
             // process
-            log.debug("using processor {}", processor::class.java.name)
+            log.trace("using processor {}", processor::class.java.name)
             processor.process(
                 value = record.value(),
                 headersRaw = headersRaw,
@@ -83,7 +82,7 @@ abstract class AbstractListener(
                 ),
                 recordStaticMetadata = recordStaticMetadata
             )
-            log.debug("successfully processed record")
+            log.trace("successfully processed record")
         } catch (exc: MapKeyMissingException) {
             throw HeaderMissingException(exc.message!!, header = exc.key, exc)
         } finally {

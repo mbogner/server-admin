@@ -3,32 +3,22 @@ package dev.mbo.serveradmin.server.metadata
 import com.fasterxml.jackson.core.JacksonException
 import com.fasterxml.jackson.databind.ObjectMapper
 import dev.mbo.serveradmin.logging.logger
+import dev.mbo.serveradmin.messaging.io.messages.RecordStaticMetadata
 import dev.mbo.serveradmin.messaging.io.messages.metadata.MetadataMessage
 import dev.mbo.serveradmin.messaging.io.messages.metadata.MetadataPayload
 import dev.mbo.serveradmin.messaging.listener.processor.Processor
 import dev.mbo.serveradmin.server.db.client.ClientService
-import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 
 @Component
-class MetadataResponseProcessor(
+class MetadataMessageProcessor(
     private val objectMapper: ObjectMapper,
     private val clientService: ClientService
 ) : Processor() {
 
     private val log = logger()
 
-    companion object {
-        val SUPPORTED_TYPE = MetadataMessage.NAME
-        const val SUPPORTED_SCHEMA_VERSION = MetadataMessage.VERSION.toString()
-        const val SUPPORTED_CONTENT_TYPE = MediaType.APPLICATION_JSON_VALUE
-    }
-
-    override fun supportedRecords(): RecordStaticMetadata = RecordStaticMetadata(
-        type = SUPPORTED_TYPE,
-        schemaVersion = SUPPORTED_SCHEMA_VERSION,
-        contentType = SUPPORTED_CONTENT_TYPE,
-    )
+    override fun supportedRecords(): RecordStaticMetadata = MetadataMessage.staticMetadata
 
     override fun process(
         value: String?,
@@ -62,13 +52,13 @@ class MetadataResponseProcessor(
     }
 
     private fun validate(recordStaticMetadata: RecordStaticMetadata) {
-        if (recordStaticMetadata.type != SUPPORTED_TYPE) {
+        if (recordStaticMetadata.type != MetadataMessage.staticMetadata.type) {
             throw IllegalArgumentException("Wrong metadata type: ${recordStaticMetadata.type}")
         }
-        if (recordStaticMetadata.contentType != SUPPORTED_CONTENT_TYPE) {
+        if (recordStaticMetadata.contentType != MetadataMessage.staticMetadata.contentType) {
             throw IllegalArgumentException("Wrong content type: ${recordStaticMetadata.contentType}")
         }
-        if (recordStaticMetadata.schemaVersion != SUPPORTED_SCHEMA_VERSION) {
+        if (recordStaticMetadata.schemaVersion != MetadataMessage.staticMetadata.schemaVersion) {
             throw IllegalArgumentException("Wrong schema version: ${recordStaticMetadata.schemaVersion}")
         }
     }

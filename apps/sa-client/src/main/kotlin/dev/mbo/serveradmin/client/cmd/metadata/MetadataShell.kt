@@ -13,7 +13,7 @@ class MetadataShell(
         value = "Trigger a metadata message manually"
     )
     fun sendMetadata(): String {
-        service.send()
+        service.sendMetadata()
         return "sent metadata"
     }
 

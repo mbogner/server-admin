@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+docker exec kraft1 sh -c '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kraft1:9192,kraft2:9193,kraft3:9194 --list | while read topic; do /opt/kafka/bin/kafka-topics.sh --bootstrap-server kraft1:9192,kraft2:9193,kraft3:9194 --topic "$topic" --delete; done'

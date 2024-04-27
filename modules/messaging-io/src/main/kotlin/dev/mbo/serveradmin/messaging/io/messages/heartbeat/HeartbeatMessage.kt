@@ -2,6 +2,8 @@ package dev.mbo.serveradmin.messaging.io.messages.heartbeat
 
 import dev.mbo.serveradmin.messaging.io.Message
 import dev.mbo.serveradmin.messaging.io.NoPayload
+import dev.mbo.serveradmin.messaging.io.messages.ContentType
+import dev.mbo.serveradmin.messaging.io.messages.RecordStaticMetadata
 import dev.mbo.serveradmin.shared.str.CaseUtil
 import java.util.*
 
@@ -13,12 +15,15 @@ class HeartbeatMessage(
     sender = sender,
     senderKey = senderKey,
     targetKey = targetKey,
-    version = VERSION
+    staticMetadata = staticMetadata
 ) {
 
     companion object {
-        val NAME = CaseUtil.toTopicName(HeartbeatMessage::class.java.simpleName)
-        const val VERSION = 1
+        val staticMetadata = RecordStaticMetadata(
+            type = CaseUtil.toTopicName(HeartbeatMessage::class.java.simpleName),
+            schemaVersion = "1",
+            contentType = ContentType.NONE
+        )
     }
 
 }

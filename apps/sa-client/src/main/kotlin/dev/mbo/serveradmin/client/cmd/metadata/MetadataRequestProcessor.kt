@@ -1,17 +1,16 @@
-package dev.mbo.serveradmin.server.heartbeat
+package dev.mbo.serveradmin.client.cmd.metadata
 
 import dev.mbo.serveradmin.messaging.io.messages.RecordStaticMetadata
-import dev.mbo.serveradmin.messaging.io.messages.heartbeat.HeartbeatMessage
+import dev.mbo.serveradmin.messaging.io.messages.metadata.MetadataRequest
 import dev.mbo.serveradmin.messaging.listener.processor.Processor
-import dev.mbo.serveradmin.server.db.client.ClientService
 import org.springframework.stereotype.Component
 
 @Component
-class HeartbeatMessageProcessor(
-    private val clientService: ClientService,
+class MetadataRequestProcessor(
+    private val service: MetadataService
 ) : Processor() {
 
-    override fun supportedRecords(): RecordStaticMetadata = HeartbeatMessage.staticMetadata
+    override fun supportedRecords(): RecordStaticMetadata = MetadataRequest.staticMetadata
 
     override fun process(
         value: String?,
@@ -21,6 +20,6 @@ class HeartbeatMessageProcessor(
         recordStaticMetadata: RecordStaticMetadata,
     ) {
         super.process(value, headersRaw, recordId, recordMetadata, recordStaticMetadata)
-        clientService.storeHeartbeat(recordMetadata.ts, recordMetadata.sender, recordMetadata.senderKey)
+        service.sendMetadata()
     }
 }

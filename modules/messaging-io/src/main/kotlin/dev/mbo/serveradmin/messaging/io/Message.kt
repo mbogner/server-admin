@@ -1,6 +1,6 @@
 package dev.mbo.serveradmin.messaging.io
 
-import dev.mbo.serveradmin.shared.str.CaseUtil
+import dev.mbo.serveradmin.messaging.io.messages.RecordStaticMetadata
 import java.time.Instant
 import java.util.*
 
@@ -9,24 +9,21 @@ abstract class Message<T>(
     val sender: String,
     val senderKey: UUID,
     val targetKey: UUID? = null,
-    val version: Int,
     val value: T? = null,
+    val staticMetadata: RecordStaticMetadata,
     val headers: Map<String, String> = emptyMap(),
     val createdAt: Instant = Instant.now()
 ) {
 
-    val type: String = CaseUtil.toTopicName(javaClass.simpleName)
-
     override fun toString(): String {
-        return "${javaClass.name}(" +
+        return "${javaClass.simpleName}(" +
                 "id=$id, " +
-                "type=$type, " +
-                "sender=$sender, " +
+                "sender='$sender', " +
                 "senderKey=$senderKey, " +
                 "targetKey=$targetKey, " +
-                "version=$version, " +
-                "headers=$headers" +
-                "createdAt=$createdAt, " +
+                "staticMetadata='$staticMetadata', " +
+                "headers=$headers, " +
+                "createdAt=$createdAt" +
                 ")"
     }
 
@@ -34,13 +31,12 @@ abstract class Message<T>(
         if (this === other) return true
         if (other !is Message<*>) return false
 
-        if (type != other.type) return false
         if (id != other.id) return false
         if (sender != other.sender) return false
         if (senderKey != other.senderKey) return false
         if (targetKey != other.targetKey) return false
-        if (version != other.version) return false
         if (value != other.value) return false
+        if (staticMetadata != other.staticMetadata) return false
         if (headers != other.headers) return false
         if (createdAt != other.createdAt) return false
 
@@ -48,17 +44,15 @@ abstract class Message<T>(
     }
 
     override fun hashCode(): Int {
-        var result = type.hashCode()
-        result = 31 * result + id.hashCode()
+        var result = id.hashCode()
         result = 31 * result + sender.hashCode()
         result = 31 * result + senderKey.hashCode()
-        result = 31 * result + targetKey.hashCode()
-        result = 31 * result + version
+        result = 31 * result + (targetKey?.hashCode() ?: 0)
         result = 31 * result + (value?.hashCode() ?: 0)
+        result = 31 * result + staticMetadata.hashCode()
         result = 31 * result + headers.hashCode()
         result = 31 * result + createdAt.hashCode()
         return result
     }
-
 
 }

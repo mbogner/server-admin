@@ -20,14 +20,14 @@ class MetadataTask(
     internal fun init() {
         if (sendOnStartup) {
             log.info("sending metadata on startup")
-            service.send()
+            service.sendMetadata()
         }
     }
 
     @Scheduled(fixedRateString = "\${app.task.metadata.seconds}", timeUnit = TimeUnit.SECONDS)
     internal fun resendRegularly() {
         log.info("sending metadata")
-        service.send()
+        service.sendMetadata()
     }
 
 }

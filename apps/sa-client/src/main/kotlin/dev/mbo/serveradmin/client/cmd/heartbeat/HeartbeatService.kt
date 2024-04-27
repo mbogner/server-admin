@@ -13,7 +13,7 @@ class HeartbeatService(
     private val sender: ClientSender,
 ) {
 
-    fun send() {
+    fun sendHeartbeat() {
         sender.boardToGround(
             HeartbeatMessage(
                 sender = clientMetadata.name,

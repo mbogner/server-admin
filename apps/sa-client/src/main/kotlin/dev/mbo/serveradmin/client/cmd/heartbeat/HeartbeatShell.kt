@@ -13,7 +13,7 @@ class HeartbeatShell(
         value = "Trigger a heartbeat message manually"
     )
     fun sendHeartbeat(): String {
-        heartbeatService.send()
+        heartbeatService.sendHeartbeat()
         return "sent heartbeat"
     }
 
