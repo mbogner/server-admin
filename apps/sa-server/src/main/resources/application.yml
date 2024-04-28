@@ -6,9 +6,9 @@ spring:
   profiles:
     active: local
   datasource:
-    url: jdbc:postgresql://localhost:5432/${spring.application.name}
-    username: admin
-    password: admin
+    url: TODO
+    username: TODO
+    password: TODO
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       maximum-pool-size: 10

@@ -125,5 +125,3 @@ volumes:
 networks:
   kafka:
     name: net_kafka
-  postgres:
-    name: net_postgres
