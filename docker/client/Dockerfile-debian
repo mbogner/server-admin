@@ -1,0 +1,24 @@
+FROM phusion/baseimage:jammy-1.0.4
+RUN apt update &&\
+    apt install -y \
+    sudo \
+    net-tools \
+    telnet \
+    htop \
+    ca-certificates \
+    curl \
+    wget \
+    gnupg \
+    man-db \
+    openjdk-21-jdk-headless \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN rm -f /etc/service/sshd/down && \
+    /etc/my_init.d/00_regen_ssh_host_keys.sh && \
+    sed -i 's/#PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    echo 'root:s3cur3' | chpasswd
+
+EXPOSE 22
+
+## Use baseimage-docker's init system.
+CMD ["/sbin/my_init"]
