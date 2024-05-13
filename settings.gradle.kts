@@ -20,11 +20,11 @@ dependencyResolutionManagement {
             // https://plugins.gradle.org/plugin/org.springframework.boot
             version("spring.boot", "3.2.5")
             // https://plugins.gradle.org/plugin/org.jetbrains.kotlin.jvm
-            version("kotlin", "1.9.23")
+            version("kotlin", "1.9.24")
             // https://mvnrepository.com/artifact/org.mockito.kotlin/mockito-kotlin
             version("mockito.kotlin", "5.3.1")
             // https://mvnrepository.com/artifact/org.springframework.shell/spring-shell-dependencies
-            version("spring.shell", "3.2.3")
+            version("spring.shell", "3.2.4")
             // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
             version("sqlite.jdbc", "3.45.3.0")
             // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-community-dialects
@@ -33,7 +33,7 @@ dependencyResolutionManagement {
             version("hibernate.dialects", "6.4.4.Final")
             // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
             // https://mvnrepository.com/artifact/org.flywaydb/flyway-database-postgresql
-            version("flyway", "10.11.1")
+            version("flyway", "10.12.0")
             // https://mvnrepository.com/artifact/org.apache.commons/commons-text
             version("commons.text", "1.12.0")
 
