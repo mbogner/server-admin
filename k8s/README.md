@@ -65,8 +65,6 @@ Run both to build the docker images:
 $ cd docker/apps/sa-server/
 $ sh build.sh
 + JARPATH=../../../apps/sa-server/build/libs/sa-server.jar
-+ [[ ! -e ../../../apps/sa-server/build/libs/sa-server.jar ]]
-build.sh: 9: [[: not found
 + cp ../../../apps/sa-server/build/libs/sa-server.jar .
 + docker build --tag sa-server:0.0.1 .
 Sending build context to Docker daemon  69.09MB
