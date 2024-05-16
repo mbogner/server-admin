@@ -7,7 +7,7 @@ This document describes a way to deploy the `Server Admin` application stack int
 This how-to requires you to have the following dependencies installed:
 
 - Latest version of the `minikube` binary (get it here: [https://minikube.sigs.k8s.io/docs/start/](https://minikube.sigs.k8s.io/docs/start/))
-- A `minikube` Kubernetes cluster instance (follow step 2 from here: [https://minikube.sigs.k8s.io/docs/start/](https://minikube.sigs.k8s.io/docs/start/))
+- A `minikube` Kubernetes cluster instance started with `minikube start --memory=4096` (follow step 2 from here: [https://minikube.sigs.k8s.io/docs/start/](https://minikube.sigs.k8s.io/docs/start/))
 - `kubectl` binary (get it here: [https://kubernetes.io/docs/tasks/tools/](https://kubernetes.io/docs/tasks/tools/))
 - `kustomize` binary (get it here: [https://kubectl.docs.kubernetes.io/installation/kustomize/binaries/](https://kubectl.docs.kubernetes.io/installation/kustomize/binaries/))
 - A VM with a Linux system on it (Debian 12 is tested to work)
