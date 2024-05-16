@@ -35,5 +35,5 @@ spec:
               secretKeyRef:
                 name: pgcreds
                 key: password
-        image: sa-server:0.0.8
+        image: sa-server:0.0.1
         imagePullPolicy: Never
