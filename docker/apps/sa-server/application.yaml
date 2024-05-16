@@ -1,0 +1,17 @@
+logging:
+  level:
+    dev.mbo: TRACE
+    dev.mbo.serveradmin.server.db.history: WARN
+    org.hibernate: WARN
+spring:
+  datasource:
+    url: jdbc:postgresql://${DATABASE_URL}/${spring.application.name}
+    username: ${DB_USER}
+    password: ${DB_PWD}
+  kafka:
+    bootstrap-servers: ${BOOTSTRAP_SERVERS} 
+app:
+  task:
+    db-history-cleanup:
+      cron: "*/10 * * * * *" # every 10 seconds
+      cutoff: 60
