@@ -12,6 +12,7 @@ This how-to requires you to have the following dependencies installed:
 - `kustomize` binary (get it here: [https://kubectl.docs.kubernetes.io/installation/kustomize/binaries/](https://kubectl.docs.kubernetes.io/installation/kustomize/binaries/))
 - A VM with a Linux system on it (Debian 12 is tested to work)
 - `openjdk-21` installed on the Linux system (to build the packages)
+- Docker engine installed
 
 To install `openjdk-21` on Debian 12, you will need to enable the `testing` repositories:
 
