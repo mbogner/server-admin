@@ -22,7 +22,8 @@ $ apt update
 $ apt install openjdk-21-jdk-headless/testing
 ```
 
-Confirm ‘yes’ to the question of installing new and replacing existing packages.
+After reviewing the changes, confirm ‘yes’ to the question of installing new and replacing existing packages.
+*WARNING* - this can break your system, so be careful what you are doing!
 
 After this you can test your `jdk` version by running:
 
