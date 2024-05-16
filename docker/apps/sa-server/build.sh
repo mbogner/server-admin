@@ -6,11 +6,6 @@ set -ex
 # copy .jar package from the original build location into this directory
 # if the .jar package does not exist, bailout
 JARPATH="../../../apps/sa-server/build/libs/sa-server.jar"
-if [[ ! -e "${JARPATH}" ]]
-then 
-	echo "${0} the ${JARPATH} is not found, bailing out..."
-	exit 1
-fi
 cp "${JARPATH}" .
 
 # build the image
