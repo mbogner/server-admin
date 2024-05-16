@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sa-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sa-server
+  template:
+    metadata:
+      labels:
+        app: sa-server 
+    spec:
+      containers:
+      - name: saserver 
+        env:
+          - name: BOOTSTRAP_SERVERS
+            valueFrom:
+              configMapKeyRef:
+                name: appenv
+                key: bootstrapsrv
+          - name: DATABASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: appenv
+                key: dburl
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: pgcreds
+                key: username
+          - name: DB_PWD
+            valueFrom:
+              secretKeyRef:
+                name: pgcreds
+                key: password
+        image: sa-server:0.0.1
+        imagePullPolicy: Never

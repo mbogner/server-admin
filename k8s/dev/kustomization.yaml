@@ -1,0 +1,23 @@
+secretGenerator:
+
+secretGenerator:
+- name: pgcreds
+  literals:
+    - username=admin
+    - password=admin
+
+configMapGenerator:
+- name: pgconfig
+  literals:
+    - datadir=/var/lib/postgresql/data/pgdata
+    - dbname=sa-server1
+- name: appenv
+  literals:
+    - dburl=postgres.default.svc.cluster.local:5432
+    - bootstrapsrv=openr-kafka-bootstrap.kafka.svc.cluster.local:9092
+
+resources:
+- ../postgres
+- ../kafka
+- ../app
+

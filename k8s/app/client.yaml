@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sa-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sa-client
+  template:
+    metadata:
+      labels:
+        app: sa-client
+    spec:
+      containers:
+      - name: saclient 
+        env:
+          - name: BOOTSTRAP_SERVERS
+            valueFrom:
+              configMapKeyRef:
+                name: appenv
+                key: bootstrapsrv
+        image: sa-client:0.0.1
+        imagePullPolicy: Never
+        volumeMounts:
+          - mountPath: /db
+            name: saclient-data
+      volumes:
+        - name: saclient-data
+          persistentVolumeClaim:
+            claimName: saclient-data
